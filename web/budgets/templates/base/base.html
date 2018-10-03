@@ -1,0 +1,29 @@
+{% load sass_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Budgets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link type="text/css" rel="stylesheet" href="{% sass_src "main.scss" %}">
+</head>
+<body>
+  <header>
+    <h1 class="title">Budgets</h1>
+    <nav>
+      <!-- <ul class="nav_list">
+        <li class="nav_item"><a href="{% url "home" %}">Home</a></li>
+      </ul> -->
+    </nav>
+  </header>
+
+  <main>
+    {% block content  %}
+    <h3> No Content</h3>
+    {% endblock  %}
+  </main>
+
+</body>
+</html>

@@ -5,7 +5,7 @@ from django.db import models
 
 
 class Budget(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='budgets')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='budget')
     name = models.CharField(max_length=180, default='Untitled')
     total_budget = models.FloatField()
     remaining_budget = models.FloatField(blank=True, null=True)
@@ -24,7 +24,7 @@ class Budget(models.Model):
 
 
 class Transaction(models.Model):
-    budget = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transactions')
+    budget = models.ForeignKey(Budget, on_delete=models.CASCADE, related_name='transaction')
     amount = models.FloatField()
     description = models.TextField(blank=True, null=True)
 

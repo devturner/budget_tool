@@ -5,6 +5,7 @@
 {% for budget in budgets %}
 <div class="status_{{ budget }}">
   <h2>{{ budget }}</h2>
+  <li><a href="{% url "create_transaction" %}">New Transaction</a></li>
   {% for transaction in transactions %}
     {% if transaction.budget == budget %}
     <p><a href="{% url "transaction_detail" id=transaction.id %}">{{ transaction.description }}</a></p>

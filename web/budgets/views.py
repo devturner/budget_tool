@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from django.urls import reverse_lazy
 from .models import Budget, Transaction
 from django.shortcuts import render
+from .forms import BudgetForm, TransactionForm
 
 
 def home_view(request):
@@ -16,9 +17,7 @@ class BudgetListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['transactions'] = Transaction.objects.filter(
-            budget__user__username=self.request.user.username)
-        print('change')
+        context['transactions'] = Transaction.objects.filter(budget__user__username=self.request.user.username)
         return context
 
     def get_queryset(self):
@@ -35,3 +34,32 @@ class TransactionDetailView(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         return Transaction.objects.filter(
             budget__user__username=self.request.user.username)
+
+
+class BudgetCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'budgets/create_budget.html'
+    model = Budget
+    form_class = BudgetForm
+    success_url = reverse_lazy('budget_view')
+    login_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        """ Attatch a user
+        """
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class TransactionCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'budgets/create_transaction.html'
+    model = Transaction
+    form_class = TransactionForm
+    success_url = reverse_lazy('budget_view')
+    login_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        """ Attatch a user
+        """
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
